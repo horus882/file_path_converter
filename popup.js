@@ -4,7 +4,7 @@ const result    = document.getElementById('result');
 const windowsToMac = document.getElementById('system-windows_to_mac');
 const macToWindows = document.getElementById('system-mac_to_windows');
 
-convert.addEventListener('click', () => {
+const handleConvert = () => {
 
     let system  = document.querySelector('input[name="system"]:checked').value;
     let value   = path.value;
@@ -36,17 +36,23 @@ convert.addEventListener('click', () => {
             macToWindows.checked = true;
         }
 
+        result.value = '';
+
         switch(system) {
             case 'windows_to_mac':
                 let formattedValue = value
                         .replace(/\\/g, '/')
                         .replace('//tp-data', '/Volumes')
-                        .replace('//tp-ml', '/Volumes');
+                        .replace('//TP-Data', '/Volumes')
+                        .replace('//TP-DATA', '/Volumes')
+                        .replace('//tp-ml', '/Volumes')
+                        .replace('//TP-Ml', '/Volumes')
+                        .replace('//TP-ML', '/Volumes');
                 if (formattedValue.indexOf('/Volumes') < 0) formattedValue = '/Volumes' + formattedValue;
-                result.textContent = formattedValue;
+                result.value = formattedValue;
                 break;
             case 'mac_to_windows':
-                result.textContent =
+                result.value =
                     value
                         .replace(/\//g, '\\')
                         .replace('smb:', '')
@@ -55,10 +61,12 @@ convert.addEventListener('click', () => {
                         .replace('\\Volumes', '');
                 break;
             case 'invalid_path':
-                result.textContent = '無效的檔案路徑';
+                result.value = '無效的檔案路徑';
         }
 
         result.style.display = 'block'
+        result.focus();
+        result.select();
 
     } else {
 
@@ -66,4 +74,14 @@ convert.addEventListener('click', () => {
 
     }
 
+}
+
+path.addEventListener('keypress', (e) => {
+    if (e.code === 'Enter' || e.key === 'Enter' || e.keyCode === 13) {
+        handleConvert();
+    }
 });
+
+convert.addEventListener('click', handleConvert);
+
+path.focus();
