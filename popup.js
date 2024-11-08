@@ -1,26 +1,22 @@
 const path      = document.getElementById('path');
 const convert   = document.getElementById('convert');
 const result    = document.getElementById('result');
-const windowsToMac = document.getElementById('system-windows_to_mac');
-const macToWindows = document.getElementById('system-mac_to_windows');
 
 const handleConvert = () => {
 
-    let system  = document.querySelector('input[name="system"]:checked').value;
+    let system  = 'windows_to_mac';
     let value   = path.value;
 
     if (value) {
 
-        let tempArray = value.split('\\');
+        let array = value.split('\\');
 
-        if (tempArray.length > 1) {
+        if (array.length > 1) {
             system = 'windows_to_mac';
-            windowsToMac.checked = true;
         } else {
-            tempArray = value.split('/');
-            if (tempArray.length > 1) {
+            array = value.split('/');
+            if (array.length > 1) {
                 system = 'mac_to_windows';
-                macToWindows.checked = true;
             } else {
                 system = 'invalid_path';
             }
@@ -28,12 +24,10 @@ const handleConvert = () => {
 
         if (value.indexOf('\\') === 0) {
             system = 'windows_to_mac';
-            windowsToMac.checked = true;
         }
 
         if (value.indexOf('smb://') >= 0 || value.indexOf('/Volumes') === 0) {
             system = 'mac_to_windows';
-            macToWindows.checked = true;
         }
 
         result.value = '';
