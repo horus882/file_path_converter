@@ -39,9 +39,11 @@ const handleConvert = () => {
                         .replace('//tp-data', '/Volumes')
                         .replace('//TP-Data', '/Volumes')
                         .replace('//TP-DATA', '/Volumes')
+                        .replace('//192.168.253.252', '/Volumes')
                         .replace('//tp-ml', '/Volumes')
                         .replace('//TP-Ml', '/Volumes')
-                        .replace('//TP-ML', '/Volumes');
+                        .replace('//TP-ML', '/Volumes')
+                        .replace('//192.168.253.248', '/Volumes');
                 if (formattedValue.indexOf('/Volumes') < 0) formattedValue = '/Volumes' + formattedValue;
                 result.value = formattedValue;
                 break;
